@@ -99,5 +99,12 @@ class Rekki_Form_Public {
 		wp_enqueue_script( $this->rekki_form, plugin_dir_url( __FILE__ ) . 'js/rekki-form-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+	public function rekki_form_shortcode() {
 
+		add_shortcode( 'shortcode-rekki-form', 'rekki_form_display' );
+
+		function rekki_form_display() {
+			include_once('partials/rekki-form-public-display.php');
+		}
+	}
 }

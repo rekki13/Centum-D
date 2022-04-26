@@ -39,7 +39,6 @@ class Rekki_Form_Admin {
 	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
-	private $plugin_name;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -113,13 +112,14 @@ class Rekki_Form_Admin {
 			'ReKKi Form', // menu link text
 			'manage_options', // capability to access the page
 			'rekki-form', // page URL slug
-			array( $this, 'rekkiAdminDashboard' ), // callback function /w content
+			array( $this, 'rekkiAdminDashboard' ),
+			// callback function /w content
 			'dashicons-buddicons-activity', // menu icon
 			13 // priority
 		);
 
 	}
 	public function rekkiAdminDashboard() {
-		require_once 'partials/'.$this->rekki_form.'-admin-display.php';
+		require_once 'partials/' . $this->rekki_form . '-admin-display.php';
 	}
 }

@@ -119,7 +119,64 @@ class Rekki_Form_Admin {
 		);
 
 	}
+
 	public function rekkiAdminDashboard() {
 		require_once 'partials/' . $this->rekki_form . '-admin-display.php';
+	}
+
+	public function process_contact_form() {
+
+		global $wpdb;
+
+		$params = $_POST;
+
+		/*create table if not exists*/
+
+		$table_name = $wpdb->prefix . 'rekki_form';
+
+		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s',
+			$wpdb->esc_like( $table_name ) );
+
+		if ( ! $wpdb->get_var( $query ) == $table_name ) {
+
+			$sql = "CREATE TABLE {$table_name} (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        rekki_form_full_name VARCHAR(255) NOT NULL,
+        rekki_form_email VARCHAR(255) NOT NULL,
+        rekki_form_phone VARCHAR(255) NOT NULL,
+        rekki_form_date DATE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )";
+
+			if ( $wpdb->query( $sql ) ) {
+				$this->submitsForm( $table_name, $params );
+			}
+
+
+		} else {
+			$this->submitsForm( $table_name, $params );
+		}
+
+		/*create table if not exists*/
+
+		die;
+
+	}
+
+	public function submitsForm( $table_name, $params ) {
+
+		global $wpdb, $wp;
+
+		$curTime = date( 'Y-m-d H:i:s' );
+
+		$query
+			= "INSERT INTO {$table_name}(rekki_form_full_name, rekki_form_email,rekki_form_phone,rekki_form_date,created_at) VALUES('{$params['rekki_form_full_name']}','{$params['rekki_form_email']}','{$params['rekki_form_phone']}','{$params['rekki_form_date']}','{$curTime}')";
+
+		if ( $wpdb->query( $query ) ) {
+			echo('success');
+
+		} else {
+			echo('sth wrong');
+		}
 	}
 }

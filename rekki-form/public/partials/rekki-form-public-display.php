@@ -13,39 +13,48 @@
  */
 ?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<div class="container">
-    <form id="contact-form" action="<?php echo esc_url( get_permalink() ); ?>"
-          method="post">
+    <form name="contact_form" method="POST"
+          action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"
+          enctype="multipart/form-data" autocomplete="off"
+          accept-charset="utf-8">
 
-        <input type="hidden" name="contact_form">
-
-        <div class="form-section">
-            <label for="full-name"><?php echo esc_html( 'Full Name',
-					'rekki-form' ); ?></label>
-            <input type="text" id="full-name" name="full_name">
+        <div>
+            <label>
+                Full Name
+                <input type="text" name="rekki_form_full_name" required="">
+            </label>
         </div>
 
-        <div class="form-section">
-            <label for="email"><?php echo esc_html( 'Email',
-					'rekki-form' ); ?></label>
-            <input type="text" id="email" name="email">
+        <div>
+            <label>
+                Email
+                <input type="email" name="rekki_form_email" required="">
+            </label>
+        </div>
+        <div>
+            <label>
+                Phone
+                <input type="tel" name="rekki_form_phone" required="">
+            </label>
+        </div>
+        <div>
+            <label>
+                Date
+                <input type="date" name="rekki_form_date" required="">
+            </label>
         </div>
 
-        <div class="form-section">
-            <label for="user-phone"><?php echo esc_html( 'Phone',
-					'rekki-form' ); ?></label>
-            <input type="tel" id="user-phone" name="user-phone">
-        </div>
-        <div class="form-section">
-            <label for="date"><?php echo esc_html( 'Date',
-					'rekki-form' ); ?></label>
-            <input type="text" id="date" name="date">
-        </div>
+        <input type="hidden" name="action" value="contact_form">
 
+        <input type="hidden" name="base_page" value="">
 
-        <input type="submit" id="contact-form-submit"
-               value="<?php echo esc_attr( 'Submit', 'rekki-form' ); ?>">
+        <div>
+            <button type="submit" name="submit_btn">
+                Submit
+            </button>
+        </div>
 
     </form>
-</div>
+    <!-- new registeration -->
+
+<?php

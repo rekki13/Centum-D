@@ -27,7 +27,7 @@ class Rekki_Form_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $rekki_form    The ID of this plugin.
+	 * @var      string $rekki_form The ID of this plugin.
 	 */
 	private $rekki_form;
 
@@ -36,21 +36,23 @@ class Rekki_Form_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
+	private $plugin_name;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $rekki_form The name of this plugin.
+	 * @param string $version    The version of this plugin.
+	 *
 	 * @since    1.0.0
-	 * @param      string    $rekki_form       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $rekki_form, $version ) {
 
 		$this->rekki_form = $rekki_form;
-		$this->version = $version;
+		$this->version    = $version;
 
 	}
 
@@ -73,7 +75,9 @@ class Rekki_Form_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->rekki_form, plugin_dir_url( __FILE__ ) . 'css/rekki-form-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->rekki_form,
+			plugin_dir_url( __FILE__ ) . 'css/rekki-form-admin.css', array(),
+			$this->version, 'all' );
 
 	}
 
@@ -96,8 +100,26 @@ class Rekki_Form_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->rekki_form, plugin_dir_url( __FILE__ ) . 'js/rekki-form-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->rekki_form,
+			plugin_dir_url( __FILE__ ) . 'js/rekki-form-admin.js',
+			array( 'jquery' ), $this->version, false );
 
 	}
 
+	public function rekki_form_page() {
+
+		add_menu_page(
+			'ReKKi Form', // page <title>Title</title>
+			'ReKKi Form', // menu link text
+			'manage_options', // capability to access the page
+			'rekki-form', // page URL slug
+			array( $this, 'rekkiAdminDashboard' ), // callback function /w content
+			'dashicons-buddicons-activity', // menu icon
+			13 // priority
+		);
+
+	}
+	public function rekkiAdminDashboard() {
+		require_once 'partials/'.$this->rekki_form.'-admin-display.php';
+	}
 }

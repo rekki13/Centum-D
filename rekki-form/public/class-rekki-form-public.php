@@ -104,9 +104,7 @@ class Rekki_Form_Public {
 		add_shortcode( 'shortcode-rekki-form', 'rekki_form_display' );
 
 		function rekki_form_display() {
-			if (!is_admin()):
 			include_once('partials/rekki-form-public-display.php');
-		endif;
 		}
 	}
 }
